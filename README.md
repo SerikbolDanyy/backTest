@@ -1,156 +1,179 @@
-# BackTest Project
-
-## Описание проекта
-`BackTest` — это сервис для отслеживания и управления транзакциями с использованием **Java 21**, **Spring Boot**, **PostgreSQL** и **Docker**. Сервис включает конвертацию валют и проверку лимитов транзакций с поддержкой работы через Docker.
-
----
-
-## Требования
-Для запуска убедитесь, что у вас установлено:
-- **Java** 21+
-- **Gradle** (или используйте встроенный `gradlew`)
-- **Docker** и **Docker Compose**
-- **PostgreSQL** (при локальном запуске без Docker)
-
----
-
-## Установка и запуск
-
-### 1. Локальная сборка и запуск
-
-1. **Проверьте, что Java установлена**:
-   ````bash
-   java -version
-
-2. **Соберите проект с помощью Gradle**:
-   ````bash
-   ./gradlew clean build
-   
-3. **Запустите приложение**:
-   ````bash
-   java -jar build/libs/backTest-0.0.1-SNAPSHOT.jar
-4. **Проверьте работу приложения**: 
-   * Приложение будет доступно по адресу: http://localhost:8080.
-
----
-
-### 2. Запуск через Docker и Docker Compose
-
-1. **Соберите и запустите контейнеры**:
-   ````bash
-   docker-compose up --build
-
-2. **Проверьте, что контейнеры запущены**:
-   ````bash
-   docker ps
-
-3. **Остановите контейнеры при необходимости**:
-   ````bash
-   docker-compose down
-   
-4. **Проверка доступа**:
-   * Приложение будет доступно по адресу: http://localhost:8080.
-   * База данных PostgreSQL доступна на порту 5432.
-
----
-
-## Структура проекта
-1.
-   ````bash
-   backTest/
-   │
-   ├── Dockerfile                # Конфигурация для сборки Docker-образа
-   ├── docker-compose.yml        # Конфигурация для запуска через Docker Compose
-   ├── build.gradle              # Файл сборки проекта Gradle
-   ├── gradlew                   # Gradle wrapper для удобного запуска
-   ├── src/
-   │   ├── main/
-   │   │   ├── java/             # Основной код на Java
-   │   │   └── resources/
-   │   │       └── db.changelog/ # Миграции базы данных (Liquibase)
-   │   └── test/                 # Тесты проекта
-   └── README.md                 # Документация (этот файл)
-
----
-
-## API-эндпоинты
-1. **Создать новую транзакцию**
-   `POST /transactions`
-    ````json
-   {
-    "account_from": "0000000123",
-    "account_to": "9999999999",
-    "currency_shortname": "KZT",
-    "sum": 1500.00,
-    "expense_category": "product",
-    "datetime": "2024-10-28T10:00:00+06:00"
-    }
-   
-2. Установить новый лимит
-   `POST /limits`
-    ```json
-   {
-    "limit_sum": 2000.00,
-    "limit_currency_shortname": "USD",
-    "limit_datetime": "2024-10-28T00:00:00+06:00"
-    }
-
-3. Получить все транзакции, превысившие лимит
-   `GET /transactions/exceeded`
-    ````json
-    {
-    "account_from": "0000000123",
-    "account_to": "9999999999",
-    "currency_shortname": "KZT",
-    "sum": 1500.00,
-    "expense_category": "product",
-    "datetime": "2024-10-28T10:00:00+06:00",
-    "limit_exceeded": true
-    }
+## Tasks
 
 
-4. Получить текущие лимиты
-   `GET /limits`
-    ````json
-    {
-    "limit_sum": 2000.00,
-    "limit_currency_shortname": "USD",
-    "limit_datetime": "2024-10-28T00:00:00+06:00"
-    }
+* [Task 01: Configure and run service + Micrometer ](docs%2Flessons%2F2_spring_boot%2Ftask-01.md) `gradle` `spring5` `spring-web` `cfg4j` `micrometer`
+* [Task 02: WebFlux ](docs/lessons/4_web/task-02.md) `webflux`
+* [Task 03: Project Reactor ](docs/lessons/4_web/task-03.md) `project reactor`
+* [Task 04: SQL ](docs/lessons/6_relational_databases/sql2024/sql.md) `mysql` `sql`
+* [Task 05: Multithreading ](docs/lessons/13_core/multithreading) `mysql` `sql`
+* [Task 06: Spring, project taskFlow ](docs/lessons/2_spring_boot/spring-task-04.md) `spring5` `gradle` `spring-web`
+* [Task 07: Hibernate, Spring Data JPA ](docs/lessons/6_relational_databases/hibernate-task-06.md) `aop` `logback.xml` `log`
+* [Task 08: MongoDB: store and query data ](docs/lessons/7_nosql_databases/mongodb/mongodb-task-07.md) `mongodb` `gridfs`
+* [Task 09: Implement business cases in domain, unit tests](docs/lessons/9_testing/test-task-08.md) `junit5` `tdd` `mockito`
+* [Task 10: RabbitMQ ](docs/lessons/8_message_brokers/rabbitmq/rabbitmq-09.md) `rabbit-mq`
+* [Task 11: Kafka ](docs/lessons/8_message_brokers/kafka/kafka-10.md) `kafka` `websocket`
+* [Task 12: ElasticSearch ](docs/lessons/7_nosql_databases/elasticsearch-task-11.md) `elasticsearch`
+* [Task 13: Redis ](docs/lessons/7_nosql_databases/redis/redis-task-12.md) `redis`
+* [Task 14: Spring Security ](docs/lessons/2_spring_boot/spring-security-15.md) `security` `jwt`
+* [Task 15: JOOQ](docs/lessons/6_relational_databases/task-15.md) `mysql` `jooq` `sql`
+* [Task 16: Provide data via GraphQL (simple fetchers)](docs/lessons/10_graphql/task-22.md)
+    `graphql-server` `spring-webclient` `mysql` `jooq`
+* [Task 17: Query data from MySQL](docs/lessons/6_relational_databases/task-16.md) 
+  `mysql` `jooq` `sql`
+* [Task 18: Data crypting in database](docs/lessons/6_relational_databases/task-18.md)
+  `mysql` `jooq` `cipher` `sql`
+* [Task 19: Query data using WebClient (views, query linked data from domains)](docs/lessons/3_http_clients/task-20.md) `spring-webclient`
+* [Task 20: Query data using Feign](docs/lessons/3_http_clients/task-21.md) `feign` `circuit 
+  breaker`
 
+## Common info
 
----
+:no_good: Don't fork any repository.
 
-## Миграции базы данных
-В проекте используется Liquibase для управления миграциями базы данных.
-1. **Миграции находятся в папке:**
-   ````css
-   src/main/resources/db.changelog/
+## Major development requirements
 
-2. **Чтобы выполнить миграции, просто запустите приложение — Liquibase автоматически применит все необходимые изменения при запуске.**
----
+`main` branch is assumed as stable branch and ready to delivery at any time.  
+Commits to `main` branch is not permitted.  
+Each change must be implemented via `pull request`.
 
-## Примечания и полезные команды
+CI tool triggers build for each PR and `master` branch.  
+CI tool analyses PR name and commit messages and automatically generates version for artifacts publication.  
+Any PR must be verified on test environment before merging it in `master` branch. You can deploy features from PR using
+autogenerated artifact version.
 
-### Полезные команды для Docker
-* Просмотреть логи контейнера:
-   ````bash
-   docker logs <container_id>
+### Module naming
 
-* Перезапустить контейнер:
-   ````bash
-  docker restart <container_id>
+All individual tasks must be placed in personal directory named as
 
-* Удалить все контейнеры и образы (при необходимости):
-   ````bash
-  docker system prune -a
+```
+<lastName>
 
-### Отладка
-Если возникнут проблемы при запуске:
-* Убедитесь, что Docker работает и контейнеры запущены.
-* Проверьте конфигурацию базы данных в файле `application.properties`.
-* Если приложение не запускается, используйте команду `docker-compose logs` для просмотра логов контейнеров.
+!All letters in lower case!
+```
 
-## Контакты
-* Если у вас возникли вопросы или проблемы с проектом, обратитесь к разработчику:
-*serikboldany@gmail.com*
+Each individual task must be placed in personal directory and named as
+
+```
+<lastName>-task-<XX>
+
+!All letters in lower case!
+```
+
+For example, if your name `John Doe`:
+
+```
+solvatech-onboarding
+  |- doe
+    |- doe-task-01
+    |- doe-task-02
+```
+
+### Commit message and PR name conventions
+
+Follow conventions for commit message and PR name: https://www.conventionalcommits.org .
+
+Don't paste full ticket name to commit message.  
+Just paste ticket number and short description what was implemented in commit.   
+Details optionally can be added below commit message after one empty line:
+
+```
+feat(registration-gateway): TASK-123 add action to create user account
+
+Usefull details here.
+Can be multiline.
+```
+
+`Revert` commit message must look as:
+
+```
+revert: feat(registration-gateway): TASK-123 add action to create user account
+```
+
+### Spring
+```Java
+@Autowired 
+```
+annotation can be used only:
+
+- in unit tests
+- to get spring internal staff (Environment, WebContext and so on)
+- to autowire configuration beans in config classes (produced from configuration classes)
+
+```Java
+@Import
+``` 
+
+can be used only in root application config and (we are trying to get only one level of nesting for configuration files)
+.
+
+In configuration files don't pass beans as method arguments.   \
+Instead of
+
+```java
+@Bean
+DictionaryCacheLoader dictionariesMapLoader(List<DictionaryItemProvider> providers) {
+ return new DictionaryCacheLoader(providers);
+}
+```
+
+write
+
+```java
+@Bean
+DictionaryCacheLoader dictionariesMapLoader() {
+ return new DictionaryCacheLoader(getProviders());
+}
+
+```
+
+### Each application should have at least two configs:
+* `ComponentServiceConfig` - it contain all beans that performs business logic. Services and all dependencies for them.
+  Will be used to add module as library.
+* `ComponentAppConfig` - it contains rest-controllers, infrastructure dependency, mvc configuration and so one. This
+  config imports `ComponentServiceConfig`, this one will be used to bootstrap endpoint.
+
+Each application should have `ComponentApp` class in the root package of app with main method to run application.
+
+### Settings and configuration provider
+All settings should be loaded from configuration in application.yml/properties
+
+```Java
+public class ItemJooqConfig {
+
+  private final ConfigurationProvider configurationProvider;
+
+  public ItemJooqConfig(ConfigurationProvider configurationProvider) {
+    this.configurationProvider = configurationProvider;
+  }
+
+  @Bean
+  public DSLContext dslContext() {
+    LOGGER.info("Building DSLContext");
+    return DefaultJooqBuilder
+        .of(configurationProvider.bind("moneyman.jooq", JooqSettings.class))
+        .withDefaultProviders()
+        .build();
+  }
+}
+```
+
+### Each application should have config for metrics:
+```Java
+@Configuration
+open class ExperimentMetricsConfig {
+
+        @Bean
+        open fun metricsController(): MetricsController {
+          return MetricsController(prometheusRegistry())
+        }
+
+        @Bean
+        open fun prometheusRegistry(): PrometheusMeterRegistry {
+          val appName = System.getProperty(AppProperties.COMPONENT_NAME_PROPERTY)
+          return MetricsBuilder()
+           .applicationName(appName)
+           .build()
+        }
+}
+```
+
